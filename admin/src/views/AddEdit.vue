@@ -6,6 +6,30 @@
       <el-form-item label="名称">
         <el-input v-model="model.title"></el-input> <!--双向数据绑定表单值到data中 -->
       </el-form-item>
+       <el-form-item label="广告">
+          <el-button size="smile" type="primary" icon="el-icon-plus" @click="model.items.push({})">添加广告</el-button>
+          <el-row type="flex" style="flex-wrap:wrap" >
+            <el-col :md="12" v-for="(item,index) in model.items" :key="index" style="margin-bottom:2rem;border-left:2px dashed skyblue;margin:20px">
+              <el-form-item label="跳转连接(URL)" style="margin-bottom:2rem">
+                <el-input v-model="item.url"></el-input>
+              </el-form-item>
+              <el-form-item label="轮播图"  style="margin-bottom:2rem">
+                 <el-upload
+                  class="avatar-uploader"
+                  :action="$http.defaults.baseURL + '/upload'"
+                  :show-file-list="false"
+                  :on-success="res => $set(item,'image' ,res.url)"
+                >
+                  <img v-if="item.image" :src="item.image" class="avatar" />
+                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                </el-upload>
+              </el-form-item >
+              <el-form-item>
+                <el-button type="text" @click="model.items.splice(index,1)" style="margin-left:350px">删除</el-button>
+              </el-form-item>
+            </el-col>
+          </el-row>
+       </el-form-item>
       <el-form-item>
         <el-button type="primary" native-type="submit">保存</el-button><!--  native-type="submit" 按钮类型是原生提交按钮 -->
       </el-form-item>
@@ -21,7 +45,9 @@ export default {
   data () {
     return {
       // 表单对象
-      model: {},
+      model: {
+        items:[]
+      },
       // 父级选项
       parents: []
     };
@@ -48,7 +74,7 @@ export default {
     },
     async fetch () {
       const res = await this.$http.get(`rest/ads/${this.id}`)
-      this.model = res.data
+      this.model = Object.assign({},this.model,res.data)
     },
    
   },

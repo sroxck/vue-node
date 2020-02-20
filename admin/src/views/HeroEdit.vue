@@ -129,7 +129,8 @@ export default {
         avatar: "",
         scores: {
           difficult: 0
-        }
+        },
+        skills:[]
       },
       categories: [],
       items: []

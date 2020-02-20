@@ -18,6 +18,10 @@ import ArticleList from '../views/ArticleList.vue'
 // 广告组件
 import AddEdit from '../views/AddEdit.vue'
 import AddList from '../views/AddList.vue'
+
+// 广告组件
+import AdminUserEdit from '../views/AdminUserEdit.vue'
+import AdminUserList from '../views/AdminUserList.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -45,6 +49,11 @@ const routes = [
       { path: '/ads/create', component: AddEdit },
       { path: '/ads/edit/:id', component: AddEdit, props: true },
       { path: '/ads/list', component: AddList },
+
+      
+      { path: '/admin_users/create', component: AdminUserEdit },
+      { path: '/admin_users/edit/:id', component: AdminUserEdit, props: true },
+      { path: '/admin_users/list', component: AdminUserList },
     ]
   }
 ]
