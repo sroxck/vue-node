@@ -10,6 +10,14 @@ import ItemList from '../views/ItemList.vue'
 // 英雄组件
 import HeroEdit from '../views/HeroEdit.vue'
 import HeroList from '../views/HeroList.vue'
+
+// 文章组件
+import ArticleEdit from '../views/ArticleEdit.vue'
+import ArticleList from '../views/ArticleList.vue'
+
+// 广告组件
+import AddEdit from '../views/AddEdit.vue'
+import AddList from '../views/AddList.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -29,6 +37,14 @@ const routes = [
       { path: '/heroes/create', component: HeroEdit },
       { path: '/heroes/edit/:id', component: HeroEdit, props: true },
       { path: '/heroes/list', component: HeroList },
+
+      { path: '/articles/create', component: ArticleEdit },
+      { path: '/articles/edit/:id', component: ArticleEdit, props: true },
+      { path: '/articles/list', component: ArticleList },
+
+      { path: '/ads/create', component: AddEdit },
+      { path: '/ads/edit/:id', component: AddEdit, props: true },
+      { path: '/ads/list', component: AddList },
     ]
   }
 ]
