@@ -63,5 +63,21 @@ const routes = [
 const router = new VueRouter({
   routes
 })
-
+Vue.mixin({
+  methods:{
+    getAuth(){
+      return {
+        Authorization: `Bearer ${localStorage.token || ''} `
+      }
+    }
+  }
+})
+// 路由守卫
+router.beforeEach((to, from, next) => {
+ 
+  if (to.path === '/login') return next()
+  const token = localStorage.getItem('token')
+  if (!token) return next('/login')
+  next()
+})
 export default router

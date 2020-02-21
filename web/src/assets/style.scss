@@ -1,0 +1,56 @@
+// reset
+* {
+  box-sizing: border-box; // c3盒模型
+  outline: none;
+}
+html {
+  font-size: 13px;
+}
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif; // 默认字体
+  line-height: 1.2em; // 行高
+  background-color: #f1f1f1;
+}
+a {
+  color: #999;
+}
+// colors 颜色定义 是个对象
+$colors: (
+  "primary": #db9e3f,
+  "white": #fff,
+  "light": #f9f9f9,
+  "grey": #999,
+  "dark-1": #343440,
+  "dark": #222,
+  "black": #000
+);
+@each $colorKey, $color in $colors { // 遍历对象,循环生成颜色类和背景颜色类
+  .text-#{colorkey} {
+    color: $color;
+  }
+  .gb-#{colorkey} {
+    background-color: $color;;
+  }
+}
+// text
+@each $var in (left, center, right) { // 遍历数组,循环生成对齐方式类
+  .text-#{$var} {
+    text-align: $var;
+  }
+}
+// font size
+$base-font-size: 1rem;  // 基准rem大小 以后调整这个 控制所有子大小
+$font-sizes:(
+  xs: 0.7692, //10ppx
+  sm: 0.9231, //12px
+  md: 1, // 13px
+  lg: 1.0769, // 14px
+  xl: 1.2308, // 16ppx
+);
+@each $sizeKey,$size in $font-sizes {
+  .fs-#{$sizeKey} {
+    font-size: $size * $base-font-size;
+  }
+}
+
