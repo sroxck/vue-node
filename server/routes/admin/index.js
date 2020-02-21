@@ -2,10 +2,13 @@ module.exports = app => {
   // 在这里可以使用app
   // 导入express框架,创建一级路由
   const express = require("express");
-  const path = require('path')
+  const path = require("path");
+  const assert = require('http-assert')
   const router = express.Router({
     mergeParams: true
   });
+  const jwt = require('jsonwebtoken')
+  const AdminUser = require('../../models/AdminUser')
 
   // 添加分类的接口
   router.post("/", async (req, res) => {
@@ -18,7 +21,16 @@ module.exports = app => {
     res.send(model);
   });
   // 获取分类的接口
-  router.get("/", async (req, res) => {
+  router.get("/", async(req,res,next) => {
+    const token = String(req.headers.authorization || '').split(' ').pop()
+    assert(token,401,'请提供twtken')
+    const {id} = jwt.verify(token,app.get('secret'))
+    assert(id,401,'无效token')
+
+    req.user = await AdminUser.findById(id)
+    assert(req.user,401,'请先登录')
+    await next()
+  },async (req, res) => {
     let queryOptions = {};
     if (req.Model.modelName === "Category") {
       queryOptions.populate = "parent";
@@ -38,6 +50,7 @@ module.exports = app => {
     const model = await req.Model.findById(req.params.id);
     res.send(model);
   });
+ 
   // 使用二级路由配置admin/api地址
   app.use(
     "/admin/api/rest/:resource",
@@ -48,15 +61,35 @@ module.exports = app => {
     },
     router
   );
-  
+
   // 文件上传处理
   const multer = require("multer");
-  
-  const upload = multer({ dest: path.join(__dirname , "/../../uploads" )});
-  app.post("/admin/api/upload", upload.single('file'), async (req, res) => {
-    const file = req.file
-    file.url = `http://localhost:3000/uploads/${file.filename}`
-    res.send(file)
+app.set('secret','adgadgkadgag34w3wf3jf2')//设置app下面一个变量 值为随机字符串 然后用于token的秘钥验证
+  const upload = multer({ dest: path.join(__dirname, "/../../uploads") });
+  app.post("/admin/api/upload", upload.single("file"), async (req, res) => {
+    const file = req.file;
+    file.url = `http://localhost:3000/uploads/${file.filename}`;
+    res.send(file);
+  });
+  // 登录接口
+  app.post("/admin/api/login", async (req, res) => {
+    const { username, password } = req.body;
+    // 根据用户名查找用户
+    const user = await AdminUser.findOne({username}).select('+password')
+    assert(user,422,'用户不存在')
+   
+    // 校验密码
+    const isValid = require('bcryptjs').compareSync(password,user.password)
+    assert(isValid,422,'密码错误')
+    
+    // 返回token
+    const token = jwt.sign({ id:user._id},app.get('secret'))
+    res.send({token:token})
+  });
+  // 错误处理中间件
+  app.use(async (err,req,res,next)=>{
+    res.status(err.statusCode || 500).send({
+      message:err.message
+    })
   })
-
 };

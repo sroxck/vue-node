@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Main from '../views/Main.vue'
+import Login from '../views/Login.vue'
 // 分类路由组件
 import CategoriesEdit from '../views/CategoriesEdit.vue'
 import CategorieList from '../views/CategorieList.vue'
@@ -55,7 +56,8 @@ const routes = [
       { path: '/admin_users/edit/:id', component: AdminUserEdit, props: true },
       { path: '/admin_users/list', component: AdminUserList },
     ]
-  }
+  },
+  { path: '/login', name:'login', component:Login}
 ]
 
 const router = new VueRouter({

@@ -7,7 +7,7 @@
         <el-input v-model="model.username"></el-input> <!--双向数据绑定表单值到data中 -->
       </el-form-item>
        <el-form-item label="密码">
-        <el-input  type="password" v-model="model.password"></el-input> <!--双向数据绑定表单值到data中 -->
+        <el-input  type="password" v-model="model.password" ></el-input> <!--双向数据绑定表单值到data中 -->
       </el-form-item>
       <el-form-item>
         <el-button type="primary" native-type="submit">保存</el-button><!--  native-type="submit" 按钮类型是原生提交按钮 -->
