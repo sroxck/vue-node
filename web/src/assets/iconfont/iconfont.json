@@ -11,6 +11,13 @@
       "font_class": "cc-menu-circle",
       "unicode": "e672",
       "unicode_decimal": 58994
+    },
+    {
+      "icon_id": "812005",
+      "name": "dot",
+      "font_class": "dot",
+      "unicode": "e65e",
+      "unicode_decimal": 58974
     }
   ]
 }
