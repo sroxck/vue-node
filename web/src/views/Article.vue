@@ -46,7 +46,7 @@ export default {
 </script>
 <style lang="scss">
 /* @import url(); 引入css类 */
-.wenz {
+.wenz {  
   .body {
     img {
       max-width: 100%;
