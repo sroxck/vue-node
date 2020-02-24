@@ -8,10 +8,11 @@
         <img class="w-100" src="../assets/img/3.jpeg" alt="" />
       </swiper-slide>
       <swiper-slide>
-        <img class="w-100" src="../assets/img/4.jpeg" alt="" />
+        <img class="w-100" src="../assets/img/4.jpeg" alt="" />  
       </swiper-slide>
       <div class="swiper-pagination pagination-home" slot="pagination"></div>
     </swiper>
+    <!-- 22-->
     <!-- end swiper -->
     <div class="nav-icons bg-white pt-3 mt-3  text-center text-dark-1">
       <div class="d-flex flex-wrap">
@@ -20,7 +21,7 @@
           <div class="py-2">{{ item.name }}</div>
         </div>
       </div>
-      <div class="bg-light py-2 fs-sm ">
+      <div class="bg-light py-2 fs-sm ">   
         <i class="sprite sprite-arrow mr-1"></i>
         收起
       </div>
