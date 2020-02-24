@@ -60,25 +60,51 @@
     </m-card> -->
 
     <m-list-card icon="cc-menu-circle" title="新闻资讯" :categories="newsCats">
-      <template #items="{category}"  >
-        <div v-for="(item, i) in category.newsList" :key="i" class="py-2">
-          <span>[{{ item.categoryName }}]</span>
-          <span>|</span>
-          <span>{{ item.title }}</span>
-          <span>{{ item.date }}</span>
+      <template #items="{category}">
+        <router-link
+          tag="div"
+          :to="`/articles/${item._id}`"
+          v-for="(item, i) in category.newsList"
+          :key="i"
+          class="py-2 fs-lg d-flex"
+        >
+          <span class="text-info">[{{ item.categoryName }}]</span>
+          <span class="px-2">|</span>
+          <span class="flex-1 text-dark-1 text-ellipsis pr-2">{{
+            item.title
+          }}</span>
+          <span class="text-grey-1 fs-sm">{{ item.createdAt | date }}</span>
+        </router-link>
+      </template>
+      <!--//通过#items 取到 子组件slot 绑定的category数据 -->
+    </m-list-card>
+
+    <m-list-card icon="cc-menu-circle" title="英雄列表"  dot :categories="heroCats">
+      <template #items="{category}">
+        <div class="d-flex flex-wrap " style="margin:0 -0.5rem">
+          <router-link :to="`/heroes/${item._id}`" tag="div" v-for="(item, i) in category.heroList" :key="i" class="p-2 text-center  " style="width:20%">
+            <img :src="item.avatar" alt=""  class="w-100"/>
+            <div>{{ item.name }}</div>
+          </router-link >
         </div>
       </template>
       <!--//通过#items 取到 子组件slot 绑定的category数据 -->
     </m-list-card>
 
-    <m-card icon="cc-menu-circle" title="英雄列表"></m-card>
-    <m-card icon="cc-menu-circle" title="精彩视频"></m-card>
-    <m-card icon="cc-menu-circle" title="图文攻略"></m-card>
+    <m-card icon="cc-menu-circle" title="英雄列表" dot></m-card>
+    <m-card icon="cc-menu-circle" title="精彩视频" dot></m-card>
+    <m-card icon="cc-menu-circle" title="图文攻略" dot></m-card>
   </div>
 </template>
 
 <script>
+import dayjs from "dayjs";
 export default {
+  filters: {
+    date(val) {
+      return dayjs(val).format("MM/DD");
+    }
+  },
   data() {
     return {
       swiperOption: {
@@ -101,49 +127,23 @@ export default {
         { name: "公众号", icon: "sprite-8" },
         { name: "版本介绍", icon: "sprite-9" }
       ],
-      newsCats: [
-        {
-          name: "热门",
-          newsList: new Array(5).fill({}).map(() => ({
-            categoryName: "热门",
-            title: "体验服爆料丨穿上新盔甲，守护玄雍城！",
-            date: "02/09"
-          }))
-        },
-        {
-          name: "公告",
-          newsList: new Array(5).fill({}).map(() => ({
-            categoryName: "公告",
-            title: "体验服爆料丨穿上新盔甲，守护玄雍城！",
-            date: "02/09"
-          }))
-        },
-        {
-          name: "新闻",
-          newsList: new Array(5).fill({}).map(() => ({
-            categoryName: "新闻",
-            title: "体验服爆料丨穿上新盔甲，守护玄雍城！",
-            date: "02/09"
-          }))
-        },
-        {
-          name: "活动",
-          newsList: new Array(5).fill({}).map(() => ({
-            categoryName: "活动",
-            title: "体验服爆料丨穿上新盔甲，守护玄雍城！",
-            date: "02/09"
-          }))
-        },
-        {
-          name: "赛事",
-          newsList: new Array(5).fill({}).map(() => ({
-            categoryName: "赛事",
-            title: "体验服爆料丨穿上新盔甲，守护玄雍城！",
-            date: "02/09"
-          }))
-        }
-      ]
+      newsCats: [],
+      heroCats: []
     };
+  },
+  methods: {
+    async getNewsCats() {
+      const res = await this.$http.get("news/list");
+      this.newsCats = res.data;
+    },
+    async getHeroCats() {
+      const res = await this.$http.get("hero/list");
+      this.heroCats = res.data;
+    }
+  },
+  created() {
+    this.getNewsCats();
+    this.getHeroCats();
   }
 };
 </script>

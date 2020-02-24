@@ -61,11 +61,6 @@ export default {
       const res = await this.$http.get(`rest/categories`)
       this.parents = res.data
     },
-  },
-  watch: {
-    $route () {
-      this.model = {}
-    }
   }
 };
 </script>

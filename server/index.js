@@ -8,6 +8,7 @@ app.use('/uploads',express.static(__dirname +'/uploads'))
 // 创建服务器
 require('./plugins/db')(app)
 require('./routes/admin/index')(app)
+require('./routes/web/index')(app)
 app.get('/',function(req, res) {
   res.send('nih2ao')
 })

@@ -28,7 +28,7 @@ module.exports = app => {
     }
     const catelist = await req.Model.find()
       .setOptions(queryOptions)
-      .limit(10);
+      .limit(100);
     res.send(catelist);
   });
   // 删除分类的接口

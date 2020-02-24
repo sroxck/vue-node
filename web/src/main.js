@@ -16,6 +16,10 @@ import Card from './components/Card.vue'
 Vue.component('m-card',Card)
 import CardList from './components/CardList.vue'
 Vue.component('m-list-card',CardList)
+import axios from 'axios'
+axios.defaults.baseURL = 'http://localhost:3000/web/api'
+Vue.prototype.$http = axios
+
 new Vue({
   router,
   render: h => h(App)
