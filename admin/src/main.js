@@ -5,7 +5,8 @@ import router from './router'
 import './assets/global.css'
 // 导入axios的实例,挂载到vue的原型对象上
 import axios from 'axios'
-axios.defaults.baseURL = 'http://localhost:3000/admin/api'
+// axios.defaults.baseURL = 'http://localhost:3000/admin/api'
+axios.defaults.baseURL = process.env.Vue_APP_API_URL || '/admin/api'
 // 请求拦截器
 axios.interceptors.request.use(config=>{
   if(localStorage.token){
