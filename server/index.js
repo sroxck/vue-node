@@ -6,8 +6,11 @@ app.use(express.json())
 // 静态文件托管
 app.use('/uploads',express.static(__dirname +'/uploads'))
 
-// pulic 就是admin 后台前端页面静态文件
+// admin 后台前端页面静态文件
 app.use('/admin',express.static(__dirname +'/admin'))
+
+// 前端官网页面静态文件
+app.use('/',express.static(__dirname +'/web'))
 
 // 创建服务器
 require('./plugins/db')(app)

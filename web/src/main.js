@@ -17,7 +17,8 @@ Vue.component('m-card',Card)
 import CardList from './components/CardList.vue'
 Vue.component('m-list-card',CardList)
 import axios from 'axios'
-axios.defaults.baseURL = 'http://localhost:3000/web/api'
+// axios.defaults.baseURL = 'http://localhost:3000/web/api'
+axios.defaults.baseURL = process.env.VUE_APP_API_URL || '/web/api'
 Vue.prototype.$http = axios
 
 new Vue({
